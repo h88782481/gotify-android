@@ -42,7 +42,7 @@ internal class InitializationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         settings = Settings(this)
-        Logger.info("Entering ${javaClass.simpleName}")
+        Logger.info("进入 ${javaClass.simpleName}")
 
         installSplashScreen().setKeepOnScreenCondition { splashScreenActive }
 
@@ -136,7 +136,7 @@ internal class InitializationActivity : AppCompatActivity() {
     }
 
     private fun authenticated(user: User) {
-        Logger.info("Authenticated as ${user.name}")
+        Logger.info("已认证的用户 ${user.name}")
 
         settings.setUser(user.name, user.isAdmin)
         requestVersion {
@@ -155,7 +155,7 @@ internal class InitializationActivity : AppCompatActivity() {
     private fun requestVersion(runnable: Runnable) {
         requestVersion(
             callback = Callback.SuccessBody { version: VersionInfo ->
-                Logger.info("Server version: ${version.version}@${version.buildDate}")
+                Logger.info("服务端版本: ${version.version}@${version.buildDate}")
                 settings.serverVersion = version.version
                 runnable.run()
             },

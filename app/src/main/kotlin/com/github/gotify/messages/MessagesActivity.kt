@@ -89,7 +89,7 @@ internal class MessagesActivity :
         binding = ActivityMessagesBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel = ViewModelProvider(this, MessagesModelFactory(this))[MessagesModel::class.java]
-        Logger.info("Entering " + javaClass.simpleName)
+        Logger.info("进入 " + javaClass.simpleName)
         initDrawer()
 
         val layoutManager = LinearLayoutManager(this)
@@ -176,7 +176,7 @@ internal class MessagesActivity :
         try {
             viewModel.picassoHandler.evict()
         } catch (e: IOException) {
-            Logger.error(e, "Problem evicting Picasso cache")
+            Logger.error(e, "清除Picasso缓存时出现问题")
         }
         startActivity(Intent(this, InitializationActivity::class.java))
         finish()
@@ -606,7 +606,7 @@ internal class MessagesActivity :
             updateMessagesForApplication(false, viewModel.appId)
         } else {
             withContext(Dispatchers.Main) {
-                Utils.showSnackBar(this@MessagesActivity, "Delete failed :(")
+                Utils.showSnackBar(this@MessagesActivity, "删除失败 :(")
             }
         }
     }
@@ -626,13 +626,13 @@ internal class MessagesActivity :
                 }
             }
             if (currentClient != null) {
-                Logger.info("Delete client with id " + currentClient.id)
+                Logger.info("删除id为${currentClient.id}的客户端")
                 Api.execute(api.deleteClient(currentClient.id))
             } else {
-                Logger.error("Could not delete client, client does not exist.")
+                Logger.error("无法删除客户端，客户端不存在。")
             }
         } catch (e: ApiException) {
-            Logger.error(e, "Could not delete client")
+            Logger.error(e, "无法删除客户端")
         }
 
         viewModel.settings.clear()

@@ -26,7 +26,7 @@ internal class LogsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLogsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Logger.info("Entering ${javaClass.simpleName}")
+        Logger.info("进入 ${javaClass.simpleName}")
         updateLogs()
         setSupportActionBar(binding.appBarDrawer.toolbar)
         val actionBar = supportActionBar
@@ -74,7 +74,7 @@ internal class LogsActivity : AppCompatActivity() {
                 val content = binding.logContent
                 val clipboardManager =
                     getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clipData = ClipData.newPlainText("GotifyLog", content.text.toString())
+                val clipData = ClipData.newPlainText("Gotify日志", content.text.toString())
                 clipboardManager.setPrimaryClip(clipData)
                 Utils.showSnackBar(this, getString(R.string.logs_copied))
                 true

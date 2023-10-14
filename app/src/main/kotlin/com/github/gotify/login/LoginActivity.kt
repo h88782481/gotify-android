@@ -46,12 +46,12 @@ internal class LoginActivity : AppCompatActivity() {
     private val certificateDialogResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             try {
-                require(result.resultCode == RESULT_OK) { "result was ${result.resultCode}" }
-                requireNotNull(result.data) { "file path was null" }
+                require(result.resultCode == RESULT_OK) { "结果是${result.resultCode}" }
+                requireNotNull(result.data) { "文件路径为空" }
 
-                val uri = result.data!!.data ?: throw IllegalArgumentException("file path was null")
+                val uri = result.data!!.data ?: throw IllegalArgumentException("文件路径为空")
                 val fileStream = contentResolver.openInputStream(uri)
-                    ?: throw IllegalArgumentException("file path was invalid")
+                    ?: throw IllegalArgumentException("文件路径无效")
 
                 val content = Utils.readFileFromStream(fileStream)
                 val name = getNameOfCertContent(content)
@@ -69,7 +69,7 @@ internal class LoginActivity : AppCompatActivity() {
         UncaughtExceptionHandler.registerCurrentThread()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        Logger.info("Entering ${javaClass.simpleName}")
+        Logger.info("进入 ${javaClass.simpleName}")
         settings = Settings(this)
     }
 
@@ -103,7 +103,7 @@ internal class LoginActivity : AppCompatActivity() {
         val url = binding.gotifyUrlEditext.text.toString().trim().trimEnd('/')
         val parsedUrl = HttpUrl.parse(url)
         if (parsedUrl == null) {
-            Utils.showSnackBar(this, "Invalid URL (include http:// or https://)")
+            Utils.showSnackBar(this, "无效的URL(包括http://或https://))")
             return
         }
 

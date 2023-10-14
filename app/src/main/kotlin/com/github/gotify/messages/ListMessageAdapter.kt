@@ -170,7 +170,7 @@ internal class ListMessageAdapter(
             super.itemView.setOnLongClickListener { view: View ->
                 val clipboard = view.context
                     .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
-                val clip = ClipData.newPlainText("GotifyMessageContent", message.text.toString())
+                val clip = ClipData.newPlainText("Gotify消息内容", message.text.toString())
                 if (clipboard != null) {
                     clipboard.setPrimaryClip(clip)
                     Toast.makeText(

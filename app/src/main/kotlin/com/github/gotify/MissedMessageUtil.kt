@@ -41,7 +41,7 @@ internal class MissedMessageUtil(private val api: MessageApi) {
                 since = pagedMessages.paging.since
             }
         } catch (e: ApiException) {
-            Logger.error(e, "cannot retrieve missing messages")
+            Logger.error(e, "无法检索丢失的消息")
         }
         return result.reversed()
     }

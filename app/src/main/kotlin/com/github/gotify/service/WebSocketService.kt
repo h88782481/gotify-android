@@ -50,7 +50,7 @@ internal class WebSocketService : Service() {
         object : ConnectivityManager.NetworkCallback() {
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
-                Logger.info("WebSocket: Network available, reconnect if needed.")
+                Logger.info("WebSocket: 网络可用，如有需要请重新连接。")
                 connection?.start()
             }
         }
@@ -71,7 +71,7 @@ internal class WebSocketService : Service() {
             settings.token
         )
         missingMessageUtil = MissedMessageUtil(client.createService(MessageApi::class.java))
-        Logger.info("Create ${javaClass.simpleName}")
+        Logger.info("创建 ${javaClass.simpleName}")
         picassoHandler = PicassoHandler(this, settings)
         markwon = MarkwonFactory.createForNotification(this, picassoHandler.get())
     }
@@ -80,7 +80,7 @@ internal class WebSocketService : Service() {
         super.onDestroy()
         connection?.close()
 
-        Logger.warn("Destroy ${javaClass.simpleName}")
+        Logger.warn("销毁 ${javaClass.simpleName}")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -88,7 +88,7 @@ internal class WebSocketService : Service() {
         UncaughtExceptionHandler.registerCurrentThread()
 
         connection?.close()
-        Logger.info("Starting ${javaClass.simpleName}")
+        Logger.info("启动 ${javaClass.simpleName}")
         super.onStartCommand(intent, flags, startId)
         Thread { startPushService() }.start()
 
@@ -165,8 +165,8 @@ internal class WebSocketService : Service() {
                             )
                         } else {
                             Logger.info(
-                                "WebSocket closed but the user still authenticated, " +
-                                    "trying to reconnect"
+                                "WebSocket已关闭，但用户仍然处于认证状态, " +
+                                    "正在尝试重新连接"
                             )
                             doReconnect()
                         }
@@ -402,7 +402,7 @@ internal class WebSocketService : Service() {
                         .bigPicture(picassoHandler.getImageFromUrl(notificationImageUrl))
                 )
             } catch (e: Exception) {
-                Logger.error(e, "Error loading bigImageUrl")
+                Logger.error(e, "加载bigImageUrl时出错")
             }
         }
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager

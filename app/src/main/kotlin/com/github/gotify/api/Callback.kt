@@ -17,7 +17,7 @@ internal class Callback<T> private constructor(
 
     fun interface SuccessBody<T> : SuccessCallback<T> {
         override fun onSuccess(response: Response<T>) {
-            onResultSuccess(response.body() ?: throw ApiException("null response", response))
+            onResultSuccess(response.body() ?: throw ApiException("空响应", response))
         }
 
         fun onResultSuccess(data: T)
@@ -67,7 +67,7 @@ internal class Callback<T> private constructor(
         private fun <T> errorCallback(): Callback<T> {
             return Callback(
                 onSuccess = {},
-                onError = { exception -> Logger.error(exception, "Error while api call") }
+                onError = { exception -> Logger.error(exception, "调用api时出错") }
             )
         }
 

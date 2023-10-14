@@ -63,10 +63,10 @@ internal object Utils {
                     URL(URL(baseURL), target).toString()
                 }
             } catch (e: MalformedURLException) {
-                Logger.error(e, "Could not resolve absolute url")
+                Logger.error(e, "无法解析绝对URL")
                 target
             } catch (e: URISyntaxException) {
-                Logger.error(e, "Could not resolve absolute url")
+                Logger.error(e, "无法解析绝对URL")
                 target
             }
         }
@@ -79,7 +79,7 @@ internal object Utils {
             }
 
             override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
-                Logger.error(e, "Bitmap failed")
+                Logger.error(e, "Bitmap失败")
             }
 
             override fun onPrepareLoad(placeHolderDrawable: Drawable) {}
@@ -96,7 +96,7 @@ internal object Utils {
                 }
             }
         } catch (e: IOException) {
-            throw IllegalArgumentException("failed to read input")
+            throw IllegalArgumentException("读取输入失败")
         }
         return sb.toString()
     }

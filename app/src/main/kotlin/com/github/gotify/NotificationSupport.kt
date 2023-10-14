@@ -93,7 +93,7 @@ internal object NotificationSupport {
             notificationManager.createNotificationChannel(messagesImportanceDefault)
             notificationManager.createNotificationChannel(messagesImportanceHigh)
         } catch (e: Exception) {
-            Logger.error(e, "Could not create channel")
+            Logger.error(e, "无法创建通道")
         }
     }
 
@@ -168,7 +168,7 @@ internal object NotificationSupport {
             notificationManager.createNotificationChannel(messagesImportanceDefault)
             notificationManager.createNotificationChannel(messagesImportanceHigh)
         } catch (e: Exception) {
-            Logger.error(e, "Could not create channel")
+            Logger.error(e, "无法创建通道")
         }
     }
 

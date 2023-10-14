@@ -52,7 +52,7 @@ internal class PicassoHandler(private val context: Context, private val settings
                 Utils.resolveAbsoluteUrl("${settings.url}/", app.image)
             )
         } catch (e: IOException) {
-            Logger.error(e, "Could not load image for notification")
+            Logger.error(e, "无法为通知加载图像")
         }
         return BitmapFactory.decodeResource(context.resources, R.drawable.gotify)
     }

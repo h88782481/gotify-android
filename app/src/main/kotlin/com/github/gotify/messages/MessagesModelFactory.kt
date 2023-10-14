@@ -13,7 +13,7 @@ internal class MessagesModelFactory(
             return modelClass.cast(MessagesModel(modelParameterActivity)) as T
         }
         throw IllegalArgumentException(
-            "modelClass parameter must be of type ${MessagesModel::class.java.name}"
+            "modelClass参数必须为type ${MessagesModel::class.java.name}"
         )
     }
 }

@@ -33,7 +33,7 @@ internal class ShareActivity : AppCompatActivity() {
         binding = ActivityShareBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Logger.info("Entering ${javaClass.simpleName}")
+        Logger.info("进入 ${javaClass.simpleName}")
         setSupportActionBar(binding.appBarDrawer.toolbar)
         val actionBar = supportActionBar
         if (actionBar != null) {
@@ -99,15 +99,15 @@ internal class ShareActivity : AppCompatActivity() {
         val appIndex = binding.appSpinner.selectedItemPosition
 
         if (contentText.isEmpty()) {
-            Toast.makeText(this, "Content should not be empty.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "内容不应该是空的。", Toast.LENGTH_LONG).show()
             return
         } else if (priority.isEmpty()) {
-            Toast.makeText(this, "Priority should be number.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "优先级应该为数字", Toast.LENGTH_LONG).show()
             return
         } else if (appIndex == Spinner.INVALID_POSITION) {
             // For safety, e.g. loading the apps needs too much time (maybe a timeout) and
             // the user tries to push without an app selected.
-            Toast.makeText(this, "An app must be selected.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "必须选择一个应用程序。", Toast.LENGTH_LONG).show()
             return
         }
 
@@ -122,12 +122,12 @@ internal class ShareActivity : AppCompatActivity() {
             val response = executeMessageCall(appIndex, message)
             withContext(Dispatchers.Main) {
                 if (response) {
-                    Toast.makeText(this@ShareActivity, "Pushed!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@ShareActivity, "推!", Toast.LENGTH_LONG).show()
                     finish()
                 } else {
                     Toast.makeText(
                         this@ShareActivity,
-                        "Oops! Something went wrong...",
+                        "哦! 出了什么问题...",
                         Toast.LENGTH_LONG
                     ).show()
                 }
@@ -146,7 +146,7 @@ internal class ShareActivity : AppCompatActivity() {
             Api.execute(messageApi.createMessage(message))
             true
         } catch (apiException: ApiException) {
-            Logger.error(apiException, "Failed sending message")
+            Logger.error(apiException, "发送消息失败")
             false
         }
     }

@@ -32,7 +32,7 @@ internal class ApplicationHolder(private val activity: Activity, private val cli
     }
 
     private fun onFailedApps() {
-        Utils.showSnackBar(activity, "Could not request applications, see logs.")
+        Utils.showSnackBar(activity, "无法请求应用程序，请参阅日志。")
         if (onUpdateFailed != null) onUpdateFailed!!.run()
     }
 

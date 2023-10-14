@@ -23,7 +23,7 @@ internal object Api {
             val response = call.execute()
 
             if (response.isSuccessful) {
-                return response.body() ?: throw ApiException("null response", response)
+                return response.body() ?: throw ApiException("空响应", response)
             } else {
                 throw ApiException(response)
             }

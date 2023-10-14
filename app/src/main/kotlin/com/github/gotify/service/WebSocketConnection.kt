@@ -105,7 +105,7 @@ internal class WebSocketConnection(
         close()
         state = State.Connecting
         val nextId = ID.incrementAndGet()
-        Logger.info("WebSocket($nextId): starting...")
+        Logger.info("WebSocket($nextId): 启动中...")
 
         webSocket = client.newWebSocket(request(), Listener(nextId))
         return this
@@ -116,7 +116,7 @@ internal class WebSocketConnection(
         if (webSocket != null) {
             webSocket?.close(1000, "")
             closed()
-            Logger.info("WebSocket(${ID.get()}): closing existing connection.")
+            Logger.info("WebSocket(${ID.get()}): 关闭现有连接。")
         }
     }
 
@@ -134,7 +134,7 @@ internal class WebSocketConnection(
         state = State.Scheduled
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Logger.info("WebSocket: scheduling a restart in $seconds second(s) (via alarm manager)")
+            Logger.info("WebSocket: 调度将在${seconds}秒内重启 (通过警报管理器)")
             val future = Calendar.getInstance()
             future.add(Calendar.SECOND, seconds.toInt())
             alarmManager.setExact(
@@ -145,7 +145,7 @@ internal class WebSocketConnection(
                 null
             )
         } else {
-            Logger.info("WebSocket: scheduling a restart in $seconds second(s)")
+            Logger.info("WebSocket: 调度将在${seconds}秒内重启")
             reconnectHandler.removeCallbacks(reconnectCallback)
             reconnectHandler.postDelayed(reconnectCallback, TimeUnit.SECONDS.toMillis(seconds))
         }
@@ -155,7 +155,7 @@ internal class WebSocketConnection(
         override fun onOpen(webSocket: WebSocket, response: Response) {
             syncExec(id) {
                 state = State.Connected
-                Logger.info("WebSocket($id): opened")
+                Logger.info("WebSocket($id): 打开")
                 onOpen.run()
 
                 if (errorCount > 0) {
@@ -168,7 +168,7 @@ internal class WebSocketConnection(
 
         override fun onMessage(webSocket: WebSocket, text: String) {
             syncExec(id) {
-                Logger.info("WebSocket($id): received message $text")
+                Logger.info("WebSocket($id): 收到的消息 $text")
                 val message = Utils.JSON.fromJson(text, Message::class.java)
                 onMessageCallback(message)
             }
@@ -178,7 +178,7 @@ internal class WebSocketConnection(
         override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
             syncExec(id) {
                 if (state == State.Connected) {
-                    Logger.warn("WebSocket($id): closed")
+                    Logger.warn("WebSocket($id): 关闭")
                     onClose.run()
                 }
                 closed()
@@ -189,7 +189,7 @@ internal class WebSocketConnection(
         override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
             val code = if (response != null) "StatusCode: ${response.code()}" else ""
             val message = if (response != null) response.message() else ""
-            Logger.error(t) { "WebSocket($id): failure $code Message: $message" }
+            Logger.error(t) { "WebSocket($id): 错误码 $code 消息: $message" }
             syncExec(id) {
                 closed()
                 if (response != null && response.code() >= 400 && response.code() <= 499) {

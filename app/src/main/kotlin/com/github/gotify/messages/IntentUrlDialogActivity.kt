@@ -12,7 +12,7 @@ internal class IntentUrlDialogActivity : AppCompatActivity() {
         setFinishOnTouchOutside(false)
         val binding = ActivityDialogIntentUrlBinding.inflate(layoutInflater)
         val intentUrl = intent.getStringExtra(EXTRA_KEY_URL)
-        assert(intentUrl != null) { "intentUrl may not be empty" }
+        assert(intentUrl != null) { "intentUrl不能为空" }
 
         binding.urlView.text = intentUrl
         binding.openButton.setOnClickListener {

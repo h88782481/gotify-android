@@ -9,23 +9,23 @@ internal class ApiException : Exception {
     var code: Int
         private set
 
-    constructor(response: Response<*>) : super("Api Error", null) {
+    constructor(response: Response<*>) : super("Api 错误", null) {
         body = try {
             if (response.errorBody() != null) response.errorBody()!!.string() else ""
         } catch (e: IOException) {
-            "Error while getting error body :("
+            "获取错误体时出错 :("
         }
         code = response.code()
     }
 
-    constructor(exceptionBody: String, response: Response<*>) : super("Api Error", null) {
+    constructor(exceptionBody: String, response: Response<*>) : super("Api 错误", null) {
         body = exceptionBody
         code = response.code()
     }
 
-    constructor(cause: Throwable?) : super("Request failed.", cause) {
+    constructor(cause: Throwable?) : super("请求失败。", cause) {
         code = 0
     }
 
-    override fun toString() = "Code($code) Response: ${body.take(200)}"
+    override fun toString() = "代码($code) 响应: ${body.take(200)}"
 }

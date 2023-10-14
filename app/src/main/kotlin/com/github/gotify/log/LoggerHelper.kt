@@ -29,7 +29,7 @@ class LoggerHelper {
 
         fun clear(ctx: Context) {
             folder(ctx).listFiles()?.forEach { it.writeText("") }
-            Logger.info("Logs cleared")
+            Logger.info("清除日志")
         }
 
         fun init(ctx: Context) {

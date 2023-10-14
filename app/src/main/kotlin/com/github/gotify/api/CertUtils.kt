@@ -36,7 +36,7 @@ internal object CertUtils {
             val certificateFactory = CertificateFactory.getInstance("X509")
             return certificateFactory.generateCertificate(Utils.stringToInputStream(cert))
         } catch (e: Exception) {
-            throw IllegalArgumentException("certificate is invalid")
+            throw IllegalArgumentException("证书无效")
         }
     }
 
@@ -64,7 +64,7 @@ internal object CertUtils {
             }
         } catch (e: Exception) {
             // We shouldn't have issues since the cert is verified on login.
-            Logger.error(e, "Failed to apply SSL settings")
+            Logger.error(e, "应用SSL设置失败")
         }
     }
 
@@ -72,7 +72,7 @@ internal object CertUtils {
     private fun certToTrustManager(cert: String): Array<TrustManager> {
         val certificateFactory = CertificateFactory.getInstance("X.509")
         val certificates = certificateFactory.generateCertificates(Utils.stringToInputStream(cert))
-        require(certificates.isNotEmpty()) { "expected non-empty set of trusted certificates" }
+        require(certificates.isNotEmpty()) { "期望非空的受信任证书集合。" }
 
         val caKeyStore = newEmptyKeyStore()
         certificates.forEachIndexed { index, certificate ->
