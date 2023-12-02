@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Network
@@ -15,6 +16,7 @@ import android.os.IBinder
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import com.github.gotify.BuildConfig
 import com.github.gotify.MarkwonFactory
 import com.github.gotify.MissedMessageUtil
 import com.github.gotify.NotificationSupport
@@ -40,7 +42,8 @@ import org.tinylog.kotlin.Logger
 
 internal class WebSocketService : Service() {
     companion object {
-        val NEW_MESSAGE_BROADCAST = "${WebSocketService::class.java.name}.NEW_MESSAGE"
+        private val castAddition = if (BuildConfig.DEBUG) ".DEBUG" else ""
+        val NEW_MESSAGE_BROADCAST = "${WebSocketService::class.java.name}.NEW_MESSAGE$castAddition"
         private const val NOT_LOADED = -2L
     }
 
@@ -285,7 +288,15 @@ internal class WebSocketService : Service() {
 
         notificationBuilder.setContentIntent(pendingIntent)
         notificationBuilder.color = ContextCompat.getColor(applicationContext, R.color.colorPrimary)
-        startForeground(NotificationSupport.ID.FOREGROUND, notificationBuilder.build())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            startForeground(
+                NotificationSupport.ID.FOREGROUND,
+                notificationBuilder.build(),
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE
+            )
+        } else {
+            startForeground(NotificationSupport.ID.FOREGROUND, notificationBuilder.build())
+        }
     }
 
     private fun showNotification(
